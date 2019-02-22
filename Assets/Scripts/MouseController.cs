@@ -14,6 +14,10 @@ public class MouseController : MonoBehaviour
     private ulong CurrentId; //当前光标控制者Body的id
     public float X, Y; //光标的X轴和Z轴坐标
     public bool IfReady = false;
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);    
+    }
     void FixedUpdate()
     {
         UpdateBodies();

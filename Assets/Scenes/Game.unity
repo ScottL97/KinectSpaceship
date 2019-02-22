@@ -316,8 +316,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 989790b7df9ec9e45aa82b81a7c8169a, type: 3}
 --- !u!4 &74930094 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5318706055801494872, guid: 989790b7df9ec9e45aa82b81a7c8169a,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 74930093}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &185681127
@@ -406,8 +405,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 989790b7df9ec9e45aa82b81a7c8169a, type: 3}
 --- !u!4 &185681128 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5318706055801494872, guid: 989790b7df9ec9e45aa82b81a7c8169a,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 185681127}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &486045326
@@ -525,7 +523,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4cf3dd9bd7b73624eb05d338cf22d74e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 0ccda6478934ed44eb652309ec29828b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1150,7 +1148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BodySourceManager: {fileID: 2042101009}
-  CurrentId: 0
   MouseSpeed: 2500
   X: 0
   Y: 0
@@ -1319,7 +1316,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -15, z: 15}
   m_LocalScale: {x: 30, y: 30, z: 30}
   m_Children:
-  - {fileID: 5318706055801494872}
+  - {fileID: 7373871213432102649}
   - {fileID: 185681128}
   - {fileID: 74930094}
   - {fileID: 1649454877}
@@ -1441,8 +1438,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 989790b7df9ec9e45aa82b81a7c8169a, type: 3}
 --- !u!4 &1649454877 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5318706055801494872, guid: 989790b7df9ec9e45aa82b81a7c8169a,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 1649454876}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1675696848
@@ -1637,12 +1633,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KinectStateText: {fileID: 894691957}
---- !u!4 &5318706055801494872 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5318706055801494872, guid: 989790b7df9ec9e45aa82b81a7c8169a,
-    type: 3}
-  m_PrefabInstance: {fileID: 7373871213432102648}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7373871213432102648
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1727,3 +1717,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 989790b7df9ec9e45aa82b81a7c8169a, type: 3}
+--- !u!4 &7373871213432102649 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 7373871213432102648}
+  m_PrefabAsset: {fileID: 0}
