@@ -8,18 +8,14 @@ public class GameController : MonoBehaviour
 {
     public GameObject MouseController;
     public GameObject VariablesRoom; //VariablesRoom游戏对象，存储需要在场景切换时传递的数据
-    public GameObject PlayerShip;
     public Image Mouse;
 
     private MouseController _MouseController; //MouseController类
     private VariablesRoom _VariablesRoom; //VariablesRoom类
-
-    private Rigidbody rb;
     void Start()
     {
         _VariablesRoom = VariablesRoom.GetComponent<VariablesRoom>();
         _MouseController = MouseController.GetComponent<MouseController>();
-        rb = PlayerShip.GetComponent<Rigidbody>();
     }
     void FixedUpdate()
     {
@@ -39,8 +35,6 @@ public class GameController : MonoBehaviour
                     }
                 }
             }
-            //飞船Z轴左右倾斜
-            
         }   
     }
 }

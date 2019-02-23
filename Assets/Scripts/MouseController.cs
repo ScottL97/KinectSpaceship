@@ -7,11 +7,11 @@ public class MouseController : MonoBehaviour
 {
     public GameObject BodySourceManager; //BodySourceManager游戏对象
     private BodySourceManager _BodySourceManager; //BodySourceManager类
-    private Dictionary<ulong, Body> _Bodies = new Dictionary<ulong, Body>(); //存储被检测到的Body对象
+    public Dictionary<ulong, Body> _Bodies = new Dictionary<ulong, Body>(); //存储被检测到的Body对象
     private List<ulong> trackedIds; //由_Bodies字典的键获得，表示上一帧被检测到的Body对象
     public int MouseSpeed; //光标移动速度
     public int? ClickState; //点击状态，为null时表示右手状态不确定，为0时表示可点击，为1时表示正处于点击状态，防止重复点击
-    private ulong CurrentId; //当前光标控制者Body的id
+    public ulong CurrentId; //当前光标控制者Body的id
     public float X, Y; //光标的X轴和Z轴坐标
     public bool IfReady = false;
     void Start()
