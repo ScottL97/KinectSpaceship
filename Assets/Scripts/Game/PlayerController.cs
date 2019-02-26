@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private int ShipMode;
 
+    public Transform LeftSide;
+    public Transform RightSide;
+    public Transform FrontSide;
+    public Transform BackSide;
     private Vector3 CenterPoint;
     private string CurrentPosition;
     private string Info;
@@ -22,13 +26,15 @@ public class PlayerController : MonoBehaviour
     private float CurrentAngel; //当前飞船旋转角度
     private float LeanValue;
     private float Vx, Vy, Vz;
+    private float TargetAx, TargetAy, TargetAz; //目标旋转角度
+    private bool IfShipReady = false;
 
     public GameObject Bolt;
     private float FireRate = 1.0f;
     private float NextFire = 0.0f;
 
     private float EnergyValue;
-    private float EnergySpeed; //能量消耗速度
+    private float EnergySpeed; //能量补充/消耗速度
     void Start()
     {
         _MouseController = MouseController.GetComponent<MouseController>();
@@ -49,14 +55,43 @@ public class PlayerController : MonoBehaviour
     {
         if(ShipMode == 1)
         {
-            //环绕星球飞行
-            transform.RotateAround(CenterPoint, new Vector3(1.0f, 0.0f, 0.0f), 0.5f);
-            EnergySpeed = 0.1f;
-            Info = "绕行星飞行，补充能量中...";
-            EnvironmentText.text = "Position: " + CurrentPosition + "\nInfo: " + Info + "\nMode: Auto Operation (Use left hand to switch manual mode)";
+            if(IfShipReady)
+            {
+                //环绕星球飞行
+                transform.RotateAround(CenterPoint, new Vector3(LeftSide.position.x - RightSide.position.x,
+                    LeftSide.position.y - RightSide.position.y,
+                    LeftSide.position.z - RightSide.position.z), 0.5f);
+                EnergySpeed = 0.1f;
+                Info = "绕行星飞行，补充能量中...";
+                EnvironmentText.text = "Position: " + CurrentPosition + "\nInfo: " + Info + "\nMode: Auto Operation (Use left hand to switch manual mode)";
+            }
+            else
+            {
+                rb.velocity = Vector3.zero;
+                Speed = 0;
+                Debug.Log(Mathf.Ceil(Vector3.Dot(RightSide.position - LeftSide.position, transform.position - CenterPoint)));
+                if (Mathf.Ceil(Vector3.Dot(RightSide.position - LeftSide.position, transform.position - CenterPoint)) == 0)
+                {
+                    if (Mathf.Ceil(Vector3.Dot(FrontSide.position - BackSide.position, transform.position - CenterPoint)) == 0)
+                    {
+                        IfShipReady = true;
+                    }
+                    else
+                    {
+                        transform.Rotate(0.5f, 0, 0);
+                    }
+                }
+                else
+                {
+                    transform.Rotate(0, 0, 0.5f);
+                }
+                Info = "即将绕行星飞行，飞船正在准备中...";
+                EnvironmentText.text = "Position: " + CurrentPosition + "\nInfo: " + Info + "\nMode: Changing Mode To Auto...";
+            }
         }
         else if(ShipMode == 2)
         {
+            IfShipReady = false;
             if(CurrentPosition != "Space")
             {
                 Info = "Be careful to avoid collision!";

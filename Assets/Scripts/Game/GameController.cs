@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public GameObject PlayerShip;
     public GameObject VariablesRoom; //VariablesRoom游戏对象，存储需要在场景切换时传递的数据
     public GameObject EndCamera;
+    public GameObject MiniMapCamera;
     public Image Mouse;
     public Text GameOverText;
 
@@ -29,6 +30,10 @@ public class GameController : MonoBehaviour
     {
         if (_MouseController.IfReady)
         {
+            if(PlayerShip != null)
+            {
+                MiniMapCamera.transform.position = new Vector3(PlayerShip.transform.position.x, PlayerShip.transform.position.y + 5, PlayerShip.transform.position.z);
+            }
             if(IfGameOver)
             {
                 if (_MouseController.ModeSwitch)
