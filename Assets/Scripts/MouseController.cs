@@ -10,9 +10,12 @@ public class MouseController : MonoBehaviour
     public Dictionary<ulong, Body> _Bodies = new Dictionary<ulong, Body>(); //存储被检测到的Body对象
     private List<ulong> trackedIds; //由_Bodies字典的键获得，表示上一帧被检测到的Body对象
     public int MouseSpeed; //光标移动速度
-    public int? ClickState; //点击状态，为null时表示右手状态不确定，为0时表示可点击，为1时表示正处于点击状态，防止重复点击
+    private int? RightHandState; //点击状态，为null时表示右手状态不确定，为0时表示可点击，为1时表示正处于点击状态，防止重复点击
+    private int? LeftHandState; //点击状态，为null时表示右手状态不确定，为0时表示可点击，为1时表示正处于点击状态，防止重复点击
     public ulong CurrentId; //当前光标控制者Body的id
-    public float X, Y; //光标的X轴和Z轴坐标
+    public float RightX, RightY; //光标的X轴和Z轴坐标
+    public float LeftX, LeftY;
+    public bool ModeSwitch = false; //左手控制的开关
     public bool IfReady = false;
     void Start()
     {
@@ -86,26 +89,55 @@ public class MouseController : MonoBehaviour
             }
         }
     }
-    public Vector3 GetMousePosition()
+    public Vector3 GetMousePosition(string hand)
     {
-        //右手坐标，范围[-1, 1]
-        CameraSpacePoint RightHandPoint = _Bodies[CurrentId].Joints[JointType.HandRight].Position;
-        X = Mathf.Clamp(RightHandPoint.X * MouseSpeed * RightHandPoint.Z, -950, 950);
-        Y = Mathf.Clamp(RightHandPoint.Y * MouseSpeed * RightHandPoint.Z, -530, 530);
-        return new Vector3(X, Y, 0);
+        if(hand == "RightHand")
+        {
+            //右手坐标，范围[-1, 1]
+            CameraSpacePoint RightHandPoint = _Bodies[CurrentId].Joints[JointType.HandRight].Position;
+            RightX = Mathf.Clamp(RightHandPoint.X * MouseSpeed * RightHandPoint.Z, -950, 950);
+            RightY = Mathf.Clamp(RightHandPoint.Y * MouseSpeed * RightHandPoint.Z, -530, 530);
+            return new Vector3(RightX, RightY, 0);
+        }
+        else
+        {
+            //左手坐标
+            CameraSpacePoint LeftHandPoint = _Bodies[CurrentId].Joints[JointType.HandLeft].Position;
+            LeftX = Mathf.Clamp(LeftHandPoint.X * MouseSpeed * LeftHandPoint.Z, -950, 950);
+            LeftY = Mathf.Clamp(LeftHandPoint.Y * MouseSpeed * LeftHandPoint.Z, -530, 530);
+            return new Vector3(LeftX, LeftY, 0);
+        }
+    }
+    public int? GetHandState(string hand)
+    {
+        if (hand == "RightHand") return RightHandState;
+        else return LeftHandState;
     }
     public void UpdateMouseState()
     {
         if (_Bodies[CurrentId].HandRightConfidence == TrackingConfidence.High)
         {
-            if (_Bodies[CurrentId].HandRightState == HandState.Closed && ClickState == 0)
+            if (_Bodies[CurrentId].HandRightState == HandState.Closed && RightHandState == 0)
             {
                 Debug.Log("click");
-                ClickState = 1;
+                RightHandState = 1;
             }
             else if (_Bodies[CurrentId].HandRightState != HandState.Closed)
             {
-                ClickState = 0;
+                RightHandState = 0;
+            }
+        }
+        if (_Bodies[CurrentId].HandLeftConfidence == TrackingConfidence.High)
+        {
+            if (_Bodies[CurrentId].HandLeftState == HandState.Closed && LeftHandState == 0)
+            {
+                ModeSwitch = !ModeSwitch;
+                Debug.Log(ModeSwitch);
+                LeftHandState = 1;
+            }
+            else if (_Bodies[CurrentId].HandLeftState != HandState.Closed)
+            {
+                LeftHandState = 0;
             }
         }
     }

@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Ship1
   - Ship2
+  - Planet1
+  - Planet2
+  - Planet3
+  - Planet4
   layers:
   - Default
   - TransparentFX

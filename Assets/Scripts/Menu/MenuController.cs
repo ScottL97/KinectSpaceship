@@ -31,7 +31,7 @@ public class MenuController : MonoBehaviour
     {
         if(_MouseController.IfReady)
         {
-            Mouse.rectTransform.localPosition = _MouseController.GetMousePosition();
+            Mouse.rectTransform.localPosition = _MouseController.GetMousePosition("RightHand");
             TrackedCountText.text = "玩家个数：" + _MouseController.GetPlayerNumbers();
             //按钮点击事件
             //如果飞船在运动中，不重复进行飞船切换动画，且暂时不能进入游戏，故进行时间限制
@@ -40,34 +40,34 @@ public class MenuController : MonoBehaviour
                 //超过时间后停止飞船切换动画
                 Ship1.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
                 Ship2.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
-                if (_MouseController.ClickState == 1)
+                if (_MouseController.GetHandState("RightHand") == 1)
                 {
                     //切换飞船按钮点击事件
-                    if (_MouseController.Y > -45 && _MouseController.Y < 45)
+                    if (_MouseController.RightY > -45 && _MouseController.RightY < 45)
                     {
-                        if ((_MouseController.X > -760 && _MouseController.X < -660)
-                        || (_MouseController.X > 660 && _MouseController.X < 760))
+                        if ((_MouseController.RightX > -760 && _MouseController.RightX < -660)
+                        || (_MouseController.RightX > 660 && _MouseController.RightX < 760))
                         {
                             int targetId = _VariablesRoom.ShipId - 1 == 1 ? 1 : 2;
                             ChangeShip(_VariablesRoom.ShipId, targetId);
                             _VariablesRoom.ShipId = targetId;
                         }
                     }
-                    else if (_MouseController.Y > -330 && _MouseController.Y < -270)
+                    else if (_MouseController.RightY > -330 && _MouseController.RightY < -270)
                     {
-                        if (_MouseController.X > -500 && _MouseController.X < -200)
+                        if (_MouseController.RightX > -500 && _MouseController.RightX < -200)
                         {
                             //开始按钮点击事件
                             Debug.Log("Start");
                             SceneManager.LoadScene("Loading");
                         }
-                        else if (_MouseController.X > -150 && _MouseController.X < 150)
+                        else if (_MouseController.RightX > -150 && _MouseController.RightX < 150)
                         {
                             //继续游戏按钮点击事件
                             Debug.Log("Continue");
                             SceneManager.LoadScene("Loading");
                         }
-                        else if (_MouseController.X > 200 && _MouseController.X < 500)
+                        else if (_MouseController.RightX > 200 && _MouseController.RightX < 500)
                         {
                             //退出游戏按钮点击事件
                             Debug.Log("Exit");
