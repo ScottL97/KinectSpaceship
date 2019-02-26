@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public GameObject VariablesRoom; //VariablesRoom游戏对象，存储需要在场景切换时传递的数据
     public GameObject EndCamera;
     public GameObject MiniMapCamera;
+    public GameObject StarField;
     public Image Mouse;
     public Text GameOverText;
 
@@ -18,7 +19,9 @@ public class GameController : MonoBehaviour
     private PlayerController _PlayerController;
     private VariablesRoom _VariablesRoom; //VariablesRoom类
 
+    private float LatestSpawnStarsTime = 0.0f;
     private bool IfGameOver = false;
+
     void Start()
     {
         EndCamera.SetActive(false);
@@ -45,6 +48,13 @@ public class GameController : MonoBehaviour
             }
             else
             {
+                //生成粒子特效
+                if (Time.time > LatestSpawnStarsTime + 20.0f)
+                {
+                    LatestSpawnStarsTime = Time.time;
+                    Instantiate(StarField, new Vector3(PlayerShip.transform.position.x, PlayerShip.transform.position.y + 1, PlayerShip.transform.position.z + 16),
+                        Quaternion.identity);
+                }
                 Mouse.rectTransform.localPosition = _MouseController.GetMousePosition("RightHand");
                 //按钮点击事件
                 if (_MouseController.GetHandState("RightHand") == 1)

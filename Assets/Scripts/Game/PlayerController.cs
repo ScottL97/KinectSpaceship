@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public GameObject MouseController;
+    public GameObject GameController;
     public Text ShipStatusText;
     public Text EnvironmentText;
 
     private MouseController _MouseController; //MouseController类
+    private GameController _GameController;
     private Rigidbody rb;
     private int ShipMode;
 
@@ -35,13 +37,16 @@ public class PlayerController : MonoBehaviour
 
     private float EnergyValue;
     private float EnergySpeed; //能量补充/消耗速度
+    private float Health;
     void Start()
     {
         _MouseController = MouseController.GetComponent<MouseController>();
+        _GameController = GameController.GetComponent<GameController>();
         rb = GetComponent<Rigidbody>();
         Speed = 0;
         RotateSpeed = 1.0f;
         EnergyValue = 10000.0f;
+        Health = 100;
         EnergySpeed = 0;
         CurrentPosition = "Space";
         Info = "";
@@ -53,6 +58,10 @@ public class PlayerController : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if(EnergyValue <= 0 || Health <= 0)
+        {
+            _GameController.GameOver();
+        }
         if(ShipMode == 1)
         {
             if(IfShipReady)
@@ -69,7 +78,6 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
                 Speed = 0;
-                Debug.Log(Mathf.Ceil(Vector3.Dot(RightSide.position - LeftSide.position, transform.position - CenterPoint)));
                 if (Mathf.Ceil(Vector3.Dot(RightSide.position - LeftSide.position, transform.position - CenterPoint)) == 0)
                 {
                     if (Mathf.Ceil(Vector3.Dot(FrontSide.position - BackSide.position, transform.position - CenterPoint)) == 0)
@@ -106,7 +114,7 @@ public class PlayerController : MonoBehaviour
             if (_MouseController.IfReady)
             {
                 LeanValue = _MouseController._Bodies[_MouseController.CurrentId].Lean.X;
-                Speed = Mathf.Abs(_MouseController._Bodies[_MouseController.CurrentId].Lean.Y * 3.0f);
+                Speed = Mathf.Abs(_MouseController._Bodies[_MouseController.CurrentId].Lean.Y * 10.0f);
                 EnergySpeed = Speed * -0.1f;
                 if (LeanValue < -0.2)
                 {
@@ -133,7 +141,7 @@ public class PlayerController : MonoBehaviour
         }
         EnergyValue += EnergySpeed;
         
-        ShipStatusText.text = "Speed：" + Speed + "\nHealth: 100 %\nEnergy: " + EnergyValue + "\nDanger: No\n" +
+        ShipStatusText.text = "Speed：" + Speed + "\nHealth: " + Health + " %\nEnergy: " + EnergyValue + "\nDanger: No\n" +
             "Vx: " + rb.velocity.x + "\nVy: " + rb.velocity.y + "\nVz: " + rb.velocity.z;
     }
     public void Launch()
@@ -143,6 +151,10 @@ public class PlayerController : MonoBehaviour
             NextFire = Time.time + FireRate;
             Instantiate(Bolt, transform.position, transform.rotation);
         }
+    }
+    public void ReduceHealth(float value)
+    {
+        Health -= value;
     }
     public void SetMode(int mode)
     {
