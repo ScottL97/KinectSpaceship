@@ -33,7 +33,21 @@ public class GameController : MonoBehaviour
     {
         if (_MouseController.IfReady)
         {
-            if(PlayerShip != null)
+            Mouse.rectTransform.localPosition = _MouseController.GetMousePosition("RightHand");
+            //按钮点击事件
+            if (_MouseController.GetHandState("RightHand") == 1)
+            {
+                if (_MouseController.RightY > 465 && _MouseController.RightY < 530)
+                {
+                    if (_MouseController.RightX > -950 && _MouseController.RightX < -770)
+                    {
+                        //返回主菜单按钮点击事件
+                        Debug.Log("Menu");
+                        SceneManager.LoadScene("Menu");
+                    }
+                }
+            }
+            if (PlayerShip != null)
             {
                 MiniMapCamera.transform.position = new Vector3(PlayerShip.transform.position.x, PlayerShip.transform.position.y + 5, PlayerShip.transform.position.z);
             }
@@ -55,25 +69,11 @@ public class GameController : MonoBehaviour
                     Instantiate(StarField, new Vector3(PlayerShip.transform.position.x, PlayerShip.transform.position.y + 1, PlayerShip.transform.position.z + 16),
                         Quaternion.identity);
                 }
-                Mouse.rectTransform.localPosition = _MouseController.GetMousePosition("RightHand");
                 //按钮点击事件
                 if (_MouseController.GetHandState("RightHand") == 1)
                 {
-                    if (_MouseController.RightY > 465 && _MouseController.RightY < 530)
-                    {
-                        if (_MouseController.RightX > -950 && _MouseController.RightX < -770)
-                        {
-                            //返回主菜单按钮点击事件
-                            Debug.Log("Menu");
-                            SceneManager.LoadScene("Menu");
-                        }
-                    }
-                    else
-                    {
-                        _PlayerController.Launch();
-                    }
+                    _PlayerController.Launch();
                 }
-                
                 if (_PlayerController.GetCurrentPosition() != "Space")
                 {
                     if (_MouseController.ModeSwitch)

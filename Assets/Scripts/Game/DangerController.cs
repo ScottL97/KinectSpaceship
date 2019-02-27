@@ -18,11 +18,17 @@ public class DangerController : MonoBehaviour
     {
         while(true)
         {
-            Debug.Log("生成波次");
             for(int i = 0; i < hazardCount; i++)
             {
-                Debug.Log("生成陨石");
-                spawnPosition = new Vector3(PlayerShip.position.x + Random.Range(10.0f, 20.0f), PlayerShip.position.y + Random.Range(10.0f, 20.0f), PlayerShip.position.z);
+                try
+                {
+                    spawnPosition = new Vector3(PlayerShip.position.x + Random.Range(10.0f, 20.0f), 
+                        PlayerShip.position.y + Random.Range(10.0f, 20.0f), PlayerShip.position.z);
+                }
+                catch(MissingReferenceException)
+                {
+                    break;
+                }
                 Instantiate(Asteroid1, spawnPosition, Quaternion.identity);
                 yield return new WaitForSeconds(spawnWait);
             }

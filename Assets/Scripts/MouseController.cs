@@ -11,7 +11,7 @@ public class MouseController : MonoBehaviour
     private List<ulong> trackedIds; //由_Bodies字典的键获得，表示上一帧被检测到的Body对象
     public int MouseSpeed; //光标移动速度
     private int? RightHandState; //点击状态，为null时表示右手状态不确定，为0时表示可点击，为1时表示正处于点击状态，防止重复点击
-    private int? LeftHandState; //点击状态，为null时表示右手状态不确定，为0时表示可点击，为1时表示正处于点击状态，防止重复点击
+    private int? LeftHandState; //点击状态，为null时表示左手状态不确定，为0时表示可点击，为1时表示正处于点击状态，防止重复点击
     public ulong CurrentId; //当前光标控制者Body的id
     public float RightX, RightY; //光标的X轴和Z轴坐标
     public float LeftX, LeftY;
