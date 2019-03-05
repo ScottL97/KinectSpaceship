@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DestroyByTime : MonoBehaviour
 {
-    private float lifeTime = 20.0f;
+    private float lifeTime = 60.0f;
     void Start()
     {
         if(tag == "Explosion")

@@ -12,6 +12,7 @@ TagManager:
   - Planet4
   - Asteroid
   - Explosion
+  - Bolt
   layers:
   - Default
   - TransparentFX
