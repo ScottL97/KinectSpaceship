@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24408ee25ae0a2b448b4562159c99227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VariablesRoom: {fileID: 0}
   LoadingText: {fileID: 738562278}
   Process: {fileID: 1071396215}
 --- !u!1 &485728043

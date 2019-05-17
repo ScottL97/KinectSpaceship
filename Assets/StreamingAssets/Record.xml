@@ -1,0 +1,16 @@
+<Ships>
+  <Ship id="1">
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </Position>
+    <Score sum="0">
+      <Planet_num>0</Planet_num>
+      <Period>5.580033</Period>
+      <Destroy>1</Destroy>
+    </Score>
+    <Planets>
+    </Planets>
+  </Ship>
+</Ships>

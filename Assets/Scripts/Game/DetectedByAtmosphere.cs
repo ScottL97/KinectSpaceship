@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Game;
 
 public class DetectedByAtmosphere : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class DetectedByAtmosphere : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerController>().SetCenterPoint(transform.position);
             other.gameObject.GetComponent<PlayerController>().SetCurrentPosition(tag);
+            other.gameObject.GetComponent<PlayerController>().AddPlanet(tag);
+            //获取行星公转/自转周期
+            other.gameObject.GetComponent<PlayerController>().ExplorePlanet(tag, PlanetsParameters.Revolution_period);
+            other.gameObject.GetComponent<PlayerController>().ExplorePlanet(tag, PlanetsParameters.Rotation_period);
         }
         else if(other.tag == "Asteroid")
         {
@@ -24,6 +29,7 @@ public class DetectedByAtmosphere : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            other.gameObject.GetComponent<PlayerController>().ExplorePlanet(tag, PlanetsParameters.Escape_velocity);
             other.gameObject.GetComponent<PlayerController>().SetCurrentPosition("Space");
         }
     }

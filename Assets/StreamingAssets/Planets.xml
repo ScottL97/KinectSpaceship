@@ -1,0 +1,18 @@
+<Planets>
+	<Planet name="Planet1">
+		<Radius>2440</Radius>
+		<Escape_velocity>4.3</Escape_velocity>
+		<Mass>0.0553</Mass>
+		<Density>5.43</Density>
+		<Revolution_period>87.70</Revolution_period>
+		<Rotation_period>58.653485</Rotation_period>
+	</Planet>
+	<Planet name="Planet2">
+		<Radius>2440</Radius>
+		<Escape_velocity>4.3</Escape_velocity>
+		<Mass>0.0553</Mass>
+		<Density>5.43</Density>
+		<Revolution_period>87.70</Revolution_period>
+		<Rotation_period>58.653485</Rotation_period>
+	</Planet>
+</Planets>

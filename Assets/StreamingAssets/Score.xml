@@ -1,0 +1,24 @@
+<Ships>
+	<Ship id="1">
+	  <Position>
+		  <X></X>
+			<Y></Y>
+			<Z></Z>
+		</Position>
+		<Score sum="0">
+		  <Planet_num>0</Planet_num>
+			<Period>0</Period>
+			<Destroy>0</Destroy>
+		</Score>
+		<Planets>
+			<Planet name="Planet1">
+			  <Radius>2440</Radius>
+				<Escape_velocity>4.3</Escape_velocity>
+				<Mass>0.0553</Mass>
+				<Density>5.43</Density>
+				<Revolution_period>87.70</Revolution_period>
+				<Rotation_period>58.653485</Rotation_period>
+			</Planet>
+		</Planets>
+	</Ship>
+</Ships>

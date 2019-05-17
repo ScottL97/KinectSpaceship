@@ -13,6 +13,14 @@ TagManager:
   - Asteroid
   - Explosion
   - Bolt
+  - Mouse
+  - StartButton
+  - ContinueButton
+  - ConfigButton
+  - RecordButton
+  - ExitButton
+  - MenuButton
+  - CloseButton
   layers:
   - Default
   - TransparentFX

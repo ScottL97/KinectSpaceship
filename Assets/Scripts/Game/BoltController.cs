@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoltController : MonoBehaviour
 {
-    public float Speed = 4.0f;
+    public float Speed = 8.0f;
     private float EndTime;
     void Start()
     {

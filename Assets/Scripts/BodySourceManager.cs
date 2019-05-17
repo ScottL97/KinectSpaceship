@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Windows.Kinect;
 
@@ -36,7 +34,7 @@ public class BodySourceManager : MonoBehaviour
         }
         else
         {
-            var frame = _Reader.AcquireLatestFrame(); //获取最近一帧的数据流
+            var frame = _Reader.AcquireLatestFrame(); //获取最近一帧的骨骼数据流
             if (frame != null)
             {
                 KinectStateText.text = "Kinect状态：Ready!";
@@ -46,12 +44,13 @@ public class BodySourceManager : MonoBehaviour
                     _Bodies = new Body[_Sensor.BodyFrameSource.BodyCount];
                 }
                 frame.GetAndRefreshBodyData(_Bodies);
-                frame.Dispose();
+                frame.Dispose(); //清除数据，防止垃圾占用内存
                 frame = null;
             }
         }
     }
 
+    //清除占用内存资源
     void OnApplicationQuit()
     {
         if(_Reader != null)
