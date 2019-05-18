@@ -20,6 +20,10 @@ public class DestroyByPlanet : MonoBehaviour
             EndCamera.SetActive(true);
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
         }
+        if(other.tag == "Bolt")
+        {
+            Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+        }
         Destroy(other.gameObject);
     }
 }

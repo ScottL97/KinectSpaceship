@@ -95,7 +95,7 @@ public class LoadingController : MonoBehaviour
             xml.Save(path);
         }
         else
-        //重置存档
+        //重置存档和VariablesRoom对象
         {
             Debug.Log("修改分数：" + 0);
             xml.Load(path);
@@ -125,6 +125,7 @@ public class LoadingController : MonoBehaviour
                     xml.Save(path);
                 }
             }
+            _VariablesRoom.Clear();
         }
         
     }
@@ -162,7 +163,6 @@ public class LoadingController : MonoBehaviour
                     planet.SetDensity(double.Parse(planetElement.SelectSingleNode("Density").InnerText));
                     planet.SetRevolutionPeriod(double.Parse(planetElement.SelectSingleNode("Revolution_period").InnerText));
                     planet.SetRotationPeriod(double.Parse(planetElement.SelectSingleNode("Rotation_period").InnerText));
-                    //_VariablesRoom.Planets.Add(planet.GetName(), planet);
                     _VariablesRoom.Planets[planet.GetName()] = planet;
                 }
             }

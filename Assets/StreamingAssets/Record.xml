@@ -6,11 +6,19 @@
       <Z>0</Z>
     </Position>
     <Score sum="0">
-      <Planet_num>0</Planet_num>
-      <Period>5.580033</Period>
-      <Destroy>1</Destroy>
+      <Planet_num>1</Planet_num>
+      <Period>22.34041</Period>
+      <Destroy>2</Destroy>
     </Score>
     <Planets>
+      <Planet name="Planet1">
+        <Radius>2440</Radius>
+        <Escape_velocity>0</Escape_velocity>
+        <Mass>0</Mass>
+        <Density>0</Density>
+        <Revolution_period>0</Revolution_period>
+        <Rotation_period>0</Rotation_period>
+      </Planet>
     </Planets>
   </Ship>
 </Ships>

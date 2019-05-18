@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private float EnergySpeed; //能量补充/消耗速度
     private float Health;
     public float Score; //当前总分
+    
     void Start()
     {
         VariablesRoom = GameObject.Find("VariablesRoom");
@@ -69,9 +70,9 @@ public class PlayerController : MonoBehaviour
         ShipStatusText.text = "Speed：" + Speed + "\nHealth: " + Health + " %\nEnergy: " + EnergyValue + "\nDanger: No\n" +
             "Vx: " + rb.velocity.x + "\nVy: " + rb.velocity.y + "\nVz: " + rb.velocity.z + "\nScore: " + (int)Score;
         //test
-        //CurrentPosition = "Planet1";
-        //AddPlanet("Planet1");
-        //ExplorePlanet("Planet1", PlanetsParameters.Radius);
+        CurrentPosition = "Planet1";
+        AddPlanet(CurrentPosition);
+        //ExplorePlanet(CurrentPosition, PlanetsParameters.Radius);
     }
     void FixedUpdate()
     {
@@ -92,10 +93,6 @@ public class PlayerController : MonoBehaviour
                 Info = "绕行星飞行，补充能量中...";
                 EnvironmentText.text = "Position: " + CurrentPosition + "\nInfo: " + Info + "\nMode: Auto Operation (Use left hand to switch manual mode)";
                 EnergyValue += EnergySpeed;
-                //使用超声波工具检测行星赤道半径
-                ExplorePlanet("Planet1", PlanetsParameters.Radius);
-                //使用测速仪根据公式计算行星质量、密度
-
             }
             else
             {
@@ -154,9 +151,9 @@ public class PlayerController : MonoBehaviour
                 Vy = _MouseController.RightY > 0 ? Speed : -Speed;
                 Vz = Mathf.Cos(Mathf.Deg2Rad * CurrentAngel) * Speed;
                 rb.velocity = new Vector3(Vx, Vy, Vz);
-                //_VariablesRoom.period += 0.01f;
+                _VariablesRoom.period += 0.01f;
             }
-            _VariablesRoom.period += 0.01f;
+            _VariablesRoom.period += 0.01f; //test
             EnergyValue += EnergySpeed;
         }
         //实时计算分数

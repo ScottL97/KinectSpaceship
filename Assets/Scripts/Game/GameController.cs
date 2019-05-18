@@ -14,16 +14,22 @@ public class GameController : MonoBehaviour
     public GameObject MiniMapCamera; //小地图摄像机
     public GameObject StarField;
     public GameObject RecordCanvas;
+    public GameObject StatusCanvas;
+
     public Image Mouse;
     public Text GameOverText;
     public Text RecordText;
+    public RawImage Weapon;
+    public Text WeaponName;
 
     private MouseController _MouseController; //MouseController类
     private PlayerController _PlayerController;
     private VariablesRoom _VariablesRoom; //VariablesRoom类
 
     private bool IfShowRecord; //是否显示记录
+    private bool IfShowStatus; //是否显示状态
     private int HasExplored; //已探索行星数
+    private int CurrentWeapon; //当前武器
 
     private float LatestSpawnStarsTime = 0.0f;
     private bool IfGameOver = false;
@@ -37,11 +43,14 @@ public class GameController : MonoBehaviour
         _MouseController = MouseController.GetComponent<MouseController>();
         _PlayerController = PlayerShip.GetComponent<PlayerController>();
         RecordCanvas.SetActive(false);
+        StatusCanvas.SetActive(false);
+        IfShowStatus = false;
         IfShowRecord = false;
+        CurrentWeapon = 1;
     }
     void FixedUpdate()
     {
-        //Debug过程用键盘控制飞船
+        //Debug过程用键盘控制
         if (_VariablesRoom.IfDebug)
         {
             if (Input.GetKey(KeyCode.A))
@@ -62,7 +71,23 @@ public class GameController : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.J))
             {
-                _PlayerController.Launch();
+                switch(CurrentWeapon)
+                {
+                    //导弹发射
+                    case 1:
+                        {
+                            _PlayerController.Launch();
+                        } break;
+                    //超声波发射
+                    case 2:
+                        {
+                            AudioSource sound = gameObject.AddComponent<AudioSource>();
+                            sound.clip = (AudioClip)Resources.Load("Sounds/explosion_enemy");
+                            sound.Play();
+                            _PlayerController.ExplorePlanet(_PlayerController.GetCurrentPosition(), PlanetsParameters.Radius);
+                        } break;
+                }
+                
             }
             if (_MouseController.GetHandState("RightHand") == 1)
             {
@@ -99,6 +124,46 @@ public class GameController : MonoBehaviour
                             UpdateXML(_VariablesRoom.ShipId); //保存分数
                             SceneManager.LoadScene("Menu");
                         } break;
+                    //状态开/关按钮点击事件
+                    case 8:
+                        {
+                            if (IfShowStatus)
+                            {
+                                IfShowStatus = false;
+                                StatusCanvas.SetActive(false);
+                            }
+                            else
+                            {
+                                IfShowStatus = true;
+                                StatusCanvas.SetActive(true);
+                            }
+                        } break;
+                    case 9:
+                        {
+                            CurrentWeapon++;
+                            //循环显示所有武器和工具
+                            if(CurrentWeapon == 3)
+                            {
+                                CurrentWeapon = 1;
+                            }
+                            Debug.Log("武器：" + CurrentWeapon);
+                            switch (CurrentWeapon)
+                            {
+                                //导弹
+                                case 1:
+                                    {
+                                        Weapon.texture = (Texture)Resources.Load("Textures/weapon");
+                                        WeaponName.text = "导弹（右手握拳发射）";
+                                    } break;
+                                //超声波
+                                case 2:
+                                    {
+                                        Weapon.texture = (Texture)Resources.Load("Textures/radar");
+                                        WeaponName.text = "超声波（右手握拳发射）";
+                                    } break;
+                                default: break;
+                            }
+                        } break;
                     default: break;
                 }  
             }
@@ -126,8 +191,7 @@ public class GameController : MonoBehaviour
                                 IfShowRecord = true;
                                 RecordCanvas.SetActive(true);
                             }
-                        }
-                        break;
+                        } break;
                     //记录关闭按钮点击事件
                     case 5:
                         {
@@ -136,13 +200,54 @@ public class GameController : MonoBehaviour
                                 IfShowRecord = false;
                                 RecordCanvas.SetActive(false);
                             }
-                        }
-                        break;
+                        } break;
                     //返回主菜单按钮点击事件
                     case 7:
                         {
                             UpdateXML(_VariablesRoom.ShipId); //保存分数
                             SceneManager.LoadScene("Menu");
+                        } break;
+                    //状态开/关按钮点击事件
+                    case 8:
+                        {
+                            if(IfShowStatus)
+                            {
+                                IfShowStatus = false;
+                                StatusCanvas.SetActive(false);
+                            }
+                            else
+                            {
+                                IfShowStatus = true;
+                                StatusCanvas.SetActive(true);
+                            }
+                        } break;
+                    //切换武器
+                    case 9:
+                        {
+                            CurrentWeapon++;
+                            //循环显示所有武器和工具
+                            if (CurrentWeapon == 3)
+                            {
+                                CurrentWeapon = 1;
+                            }
+                            switch (CurrentWeapon)
+                            {
+                                //导弹
+                                case 1:
+                                    {
+                                        Weapon.texture = (Texture)Resources.Load("Textures/weapon");
+                                        WeaponName.text = "导弹（右手握拳发射）";
+                                    }
+                                    break;
+                                //超声波
+                                case 2:
+                                    {
+                                        Weapon.texture = (Texture)Resources.Load("Textures/radar");
+                                        WeaponName.text = "超声波（右手握拳发射）";
+                                    }
+                                    break;
+                                default: break;
+                            }
                         }
                         break;
                     default: break;
@@ -158,7 +263,7 @@ public class GameController : MonoBehaviour
                 {
                     IfGameOver = false;
                     GameOverText.text = "";
-                    SceneManager.LoadScene("Loading");
+                    SceneManager.LoadScene("Menu");
                 }
             }
             else
@@ -171,10 +276,23 @@ public class GameController : MonoBehaviour
                         Quaternion.identity);
                 }
                 //手部握拳点击事件
-                if (_MouseController.GetHandState("RightHand") == 1)
+                if (_MouseController.GetHandState("RightHand") == 1 && _MouseController.ButtonNum == 0)
                 {
-                    //发射导弹
-                    _PlayerController.Launch();
+                    switch (CurrentWeapon)
+                    {
+                        //导弹发射
+                        case 1:
+                            {
+                                _PlayerController.Launch();
+                            }
+                            break;
+                        //超声波发射
+                        case 2:
+                            {
+                                _PlayerController.ExplorePlanet(_PlayerController.GetCurrentPosition(), PlanetsParameters.Radius);
+                            }
+                            break;
+                    }
                 }
                 if (_PlayerController.GetCurrentPosition() != "Space")
                 {
@@ -194,9 +312,10 @@ public class GameController : MonoBehaviour
     {
         IfGameOver = true;
         _MouseController.ModeSwitch = false;
-        GameOverText.text = "Game Over! 左手握拳重新开始游戏！";
+        GameOverText.text = "Game Over! \n左手握拳返回主菜单，可以从上次存档处继续游戏";
         _PlayerController.SetMode(0); //飞船停止修改数据（如分数不再增加）
-        UpdateXML(_VariablesRoom.ShipId); //保存分数
+        //UpdateXML(_VariablesRoom.ShipId); //保存分数
+        //不保存分数，玩家可以从上次存档继续
     }
     public void UpdateXML(int id)
     {
@@ -214,9 +333,18 @@ public class GameController : MonoBehaviour
             {
                 XmlElement positionElement = (XmlElement)ship.SelectSingleNode("Position");
                 XmlNodeList positionList = positionElement.ChildNodes;
-                positionElement.SelectSingleNode("X").InnerText = _PlayerController.transform.position.x.ToString();
-                positionElement.SelectSingleNode("Y").InnerText = _PlayerController.transform.position.y.ToString();
-                positionElement.SelectSingleNode("Z").InnerText = _PlayerController.transform.position.z.ToString();
+                if(_PlayerController != null)
+                {
+                    positionElement.SelectSingleNode("X").InnerText = _PlayerController.transform.position.x.ToString();
+                    positionElement.SelectSingleNode("Y").InnerText = _PlayerController.transform.position.y.ToString();
+                    positionElement.SelectSingleNode("Z").InnerText = _PlayerController.transform.position.z.ToString();
+                }
+                else
+                {
+                    positionElement.SelectSingleNode("X").InnerText = EndCamera.transform.position.x.ToString();
+                    positionElement.SelectSingleNode("Y").InnerText = EndCamera.transform.position.y.ToString();
+                    positionElement.SelectSingleNode("Z").InnerText = EndCamera.transform.position.z.ToString();
+                }
                 XmlElement scoreElement = (XmlElement)ship.SelectSingleNode("Score");
                 XmlNodeList scoreList = scoreElement.ChildNodes;
                 scoreElement.SelectSingleNode("Planet_num").InnerText = _VariablesRoom.planet_num.ToString();

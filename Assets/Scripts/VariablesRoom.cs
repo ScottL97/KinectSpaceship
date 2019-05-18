@@ -25,4 +25,16 @@ public class VariablesRoom : MonoBehaviour
         IfDebug = true;
     }
 
+    public void Clear()
+    {
+        x = 0;
+        y = 0;
+        z = 0;
+        planet_num = 0;
+        period = 0;
+        destroy = 0;
+        Planets = null;
+        Planets = new Dictionary<string, Planet>();
+    }
+
 }

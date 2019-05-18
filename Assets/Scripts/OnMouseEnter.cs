@@ -39,7 +39,11 @@ public class OnMouseEnter : MonoBehaviour
         if (collision.tag == "Mouse")
         {
             gameObject.GetComponent<AudioSource>().Play();
-            if(tag != "ContinueButton" || (IfCanContinue && tag == "ContinueButton"))
+            if(tag == "Weapon")
+            {
+                GetComponent<RawImage>().color = new Color(0.5f, 1.0f, 1.0f, 1.0f);
+            }
+            else if (tag != "ContinueButton" || (IfCanContinue && tag == "ContinueButton"))
             {
                 GetComponent<Image>().color = new Color(0, 0.5f, 0, 0.5f);
             }
@@ -78,6 +82,15 @@ public class OnMouseEnter : MonoBehaviour
                     _MouseController.ButtonNum = 7;
                 }
                 break;
+                case "StatusButton":
+                {
+                    _MouseController.ButtonNum = 8;
+                }
+                break;
+                case "Weapon":
+                {
+                    _MouseController.ButtonNum = 9;
+                } break;
                 default: break;
             }
         }
@@ -87,7 +100,11 @@ public class OnMouseEnter : MonoBehaviour
         if (collision.tag == "Mouse")
         {
             _MouseController.ButtonNum = 0;
-            if (tag != "ContinueButton" || (IfCanContinue && tag == "ContinueButton"))
+            if(tag == "Weapon")
+            {
+                GetComponent<RawImage>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            }
+            else if (tag != "ContinueButton" || (IfCanContinue && tag == "ContinueButton"))
             {
                 GetComponent<Image>().color = new Color(1.0f, 0.5f, 0, 0.5f);
             }

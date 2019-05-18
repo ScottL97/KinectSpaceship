@@ -7,6 +7,7 @@ public class DangerController : MonoBehaviour
     private float spawnWait = 3.0f;
     private float waveWait = 5.0f;
     private int hazardCount = 5;
+    private float times; //陨石随机放大倍数
     private Vector3 spawnPosition;
     public Transform PlayerShip;
     public GameObject Asteroid1;
@@ -29,6 +30,8 @@ public class DangerController : MonoBehaviour
                 {
                     break;
                 }
+                times = Random.Range(1.0f, 3.0f);
+                Asteroid1.GetComponent<Transform>().localScale = new Vector3(times, times, times);
                 Instantiate(Asteroid1, spawnPosition, Quaternion.identity);
                 yield return new WaitForSeconds(spawnWait); //等待3s生成下一个陨石
             }

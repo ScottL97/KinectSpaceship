@@ -21,6 +21,8 @@ TagManager:
   - ExitButton
   - MenuButton
   - CloseButton
+  - StatusButton
+  - Weapon
   layers:
   - Default
   - TransparentFX
